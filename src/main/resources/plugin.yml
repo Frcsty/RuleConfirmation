@@ -1,0 +1,5 @@
+name: RuleConfirmation
+version: @version@
+main: com.github.frcsty.ruleconfirmation.ConfirmationPlugin
+api-version: 1.13
+author: Frcsty
