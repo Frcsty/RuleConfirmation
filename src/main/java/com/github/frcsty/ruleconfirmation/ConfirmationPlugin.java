@@ -1,9 +1,11 @@
 package com.github.frcsty.ruleconfirmation;
 
 import com.github.frcsty.ruleconfirmation.command.RulesConfirmationCommand;
+import com.github.frcsty.ruleconfirmation.listener.PlayerCommandListener;
 import com.github.frcsty.ruleconfirmation.listener.PlayerJoinListener;
 import com.github.frcsty.ruleconfirmation.request.ConfirmationRequest;
 import me.mattstudios.mf.base.CommandManager;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -17,9 +19,9 @@ public final class ConfirmationPlugin extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
 
-        getServer().getPluginManager().registerEvents(
+        registerListeners(
                 new PlayerJoinListener(this),
-                this
+                new PlayerCommandListener(this)
         );
 
         final CommandManager commandManager = new CommandManager(this);
@@ -33,15 +35,16 @@ public final class ConfirmationPlugin extends JavaPlugin {
         reloadConfig();
     }
 
-    /**
-     * Saves resources, without outputting and "already exists" messages into console
-     *
-     * @param resources Desired resources path's to be saved
-     */
     public void saveResources(final String... resources) {
         Arrays.stream(resources).forEach(resource -> {
             if (!new File(getDataFolder(), resource).exists()) saveResource(resource, false);
         });
+    }
+
+    private void registerListeners(final Listener... listeners) {
+        Arrays.stream(listeners).forEach(listener ->
+                getServer().getPluginManager().registerEvents(listener, this)
+        );
     }
 
     public ConfirmationRequest getConfirmationRequest() {
