@@ -1,2 +1,5 @@
 messages:
-  confirm-rules: "&7You need to confirm the rules before proceeding!"
+  confirmed-rule: "&aThank you for confirming that you agree with our rules!"
+  rules: "<link>"
+  confirm-rules: "&7Please take a minute to read through our rules."
+  hover: "&7&oClick to confirm that you agree with our rules."
